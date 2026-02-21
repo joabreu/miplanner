@@ -1,8 +1,10 @@
 .*
 **/__pycache__/*
 *.egg-info/
+projects/state/*
 
 # Not ignored
+!projects/state/STATE
 !.gitignore
 !.pre-commit-config.yaml
 !.python-version

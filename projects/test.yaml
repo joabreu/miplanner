@@ -1,0 +1,17 @@
+name: New Test Support
+start_date: 2026-03-01
+
+activities:
+  - id: A1
+    name: Requirements analysis
+    requirement: R1
+    estimate_days: 3
+
+  - id: A2
+    name: Backend implementation
+    requirement: R2
+    estimate_days: 6
+
+  - id: A3
+    name: Integration tests
+    estimate_days: 4
