@@ -8,7 +8,7 @@ from datetime import datetime
 from backend.planner import compute_schedule
 from backend.repository import load_project, save_state
 from fastapi import FastAPI, Form, Request
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from models import Project
@@ -59,7 +59,7 @@ def calculate_metrics(project: Project) -> dict:
 
 
 @app.get("/")
-def index(request: Request) -> Jinja2Templates.TemplateResponse:
+def index(request: Request) -> Response:
     """Get index page."""
     project_summaries = []
     for p in PROJECT_FILE:
@@ -77,7 +77,7 @@ def index(request: Request) -> Jinja2Templates.TemplateResponse:
 
 
 @app.get("/project/{project_id}")
-def get_project(request: Request, project_id: str) -> Jinja2Templates.TemplateResponse:
+def get_project(request: Request, project_id: str) -> Response:
     """Get project page."""
     project = load_project(project_id)
     schedule = compute_schedule(project)
@@ -95,7 +95,7 @@ def get_project(request: Request, project_id: str) -> Jinja2Templates.TemplateRe
 
 
 @app.post("/update")
-def update_activity(activity_id: str = Form(...), progress: float = Form(...)) -> Jinja2Templates.TemplateResponse:
+def update_activity(activity_id: str = Form(...), progress: float = Form(...)) -> Response:
     """Update project state page."""
     project = load_project(PROJECT_FILE)
 
