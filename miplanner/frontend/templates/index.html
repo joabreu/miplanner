@@ -1,0 +1,70 @@
+{% extends "base.html" %} {% block content %} {% for p in projects %}
+
+<div class="bg-slate-800 rounded-2xl p-8 mb-4 shadow-lg">
+  <h2 class="text-xl font-semibold mb-6">{{ p.name }}</h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+    <div class="bg-slate-800 p-4 rounded-lg">
+      <div class="text-sm text-slate-400">Completion</div>
+      <div class="text-xl font-bold">
+        {{ p.metrics.completion | round(1) }}%
+      </div>
+      <div class="w-full bg-slate-700 rounded-full h-2 mt-2">
+        <div
+          class="bg-indigo-500 h-2 rounded-full"
+          style="width: {{ p.metrics.completion }}%"
+        ></div>
+      </div>
+    </div>
+
+    <div class="bg-slate-800 p-4 rounded-lg">
+      <div class="text-sm text-slate-400">Activities</div>
+      <div class="text-xl font-bold">
+        {{ p.metrics.done_activities }} / {{ p.metrics.total_activities }}
+      </div>
+      <div class="w-full bg-slate-700 rounded-full h-2 mt-2">
+        <div
+          class="bg-indigo-500 h-2 rounded-full"
+          style="width: {{ p.metrics.completion_activities }}%"
+        ></div>
+      </div>
+    </div>
+
+    <div class="bg-slate-800 p-4 rounded-lg">
+      <div class="text-sm text-slate-400">Duration</div>
+      <div class="text-xl font-bold">
+        {{ p.metrics.estimated_duration }} days
+      </div>
+    </div>
+
+    <div class="bg-slate-800 p-4 rounded-lg">
+      <div class="text-sm text-slate-400">Actual Duration</div>
+      <div class="text-xl font-bold">
+        {% if p.metrics.actual_duration %} {{ p.metrics.actual_duration }} days
+        {% else %} - {% endif %}
+      </div>
+    </div>
+
+    <div class="bg-slate-800 p-4 rounded-lg">
+      <a
+        href="/project/{{ p.id }}"
+        class="inline-block mt-4 bg-indigo-600 hover:bg-indigo-500 px-5 py-2 rounded-lg text-sm font-medium"
+      >
+        Open Project
+      </a>
+    </div>
+  </div>
+
+  <!--<div class="mb-6">
+<div class="flex justify-between text-sm mb-2">
+<span>Completion</span>
+<span>{{ p.metrics.completion | round(1) }}%</span>
+</div>
+
+<div class="w-full bg-slate-700 rounded-full h-3">
+<div class="bg-indigo-500 h-3 rounded-full"
+style="width: {{ p.metrics.completion }}%">
+</div>
+</div>-->
+</div>
+{% endfor %} {% endblock %}

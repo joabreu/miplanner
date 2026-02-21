@@ -1,0 +1,127 @@
+{% extends "base.html" %} {% block content %}
+
+<h2 class="text-2xl font-semibold mb-6">{{ project.name }}</h2>
+
+<div class="overflow-hidden rounded-2xl shadow-lg">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+    <div class="bg-slate-800 p-4 rounded-lg">
+      <div class="text-sm text-slate-400">Completion</div>
+      <div class="text-xl font-bold">{{ metrics.completion | round(1) }}%</div>
+      <div class="w-full bg-slate-700 rounded-full h-2 mt-2">
+        <div
+          class="bg-indigo-500 h-2 rounded-full"
+          style="width: {{ metrics.completion }}%"
+        ></div>
+      </div>
+    </div>
+
+    <div class="bg-slate-800 p-4 rounded-lg">
+      <div class="text-sm text-slate-400">Activities</div>
+      <div class="text-xl font-bold">
+        {{ metrics.done_activities }} / {{ metrics.total_activities }}
+      </div>
+      <div class="w-full bg-slate-700 rounded-full h-2 mt-2">
+        <div
+          class="bg-indigo-500 h-2 rounded-full"
+          style="width: {{ metrics.completion_activities }}%"
+        ></div>
+      </div>
+    </div>
+
+    <div class="bg-slate-800 p-4 rounded-lg">
+      <div class="text-sm text-slate-400">Estimated Duration</div>
+      <div class="text-xl font-bold">{{ metrics.estimated_duration }} days</div>
+    </div>
+
+    <div class="bg-slate-800 p-4 rounded-lg">
+      <div class="text-sm text-slate-400">Actual Duration</div>
+      <div class="text-xl font-bold">
+        {% if metrics.actual_duration %} {{ metrics.actual_duration }} days {%
+        else %} - {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <table class="min-w-full bg-slate-800">
+    <thead class="bg-slate-700 text-slate-300 text-sm">
+      <tr>
+        <th class="px-6 py-3 text-left">Activity</th>
+        <th class="px-6 py-3 text-left">Req</th>
+        <th class="px-6 py-3 text-left">Estimate</th>
+        <th class="px-6 py-3 text-left">Schedule</th>
+        <th class="px-6 py-3 text-left">Progress</th>
+        <th class="px-6 py-3 text-left"></th>
+      </tr>
+    </thead>
+
+    <tbody class="divide-y divide-slate-700">
+      {% for a in project.activities %}
+
+      <tr class="hover:bg-slate-750">
+        <td class="px-6 py-4">
+          <div class="font-medium">{{ a.name }}</div>
+          <div class="text-xs text-slate-400">{{ a.id }}</div>
+        </td>
+
+        <td class="px-6 py-4 text-sm text-slate-300">
+          {{ a.requirement if a.requirement else "-" }}
+        </td>
+
+        <td class="px-6 py-4 text-sm">{{ a.estimate_days }} days</td>
+
+        <td class="px-6 py-4 text-sm text-slate-400">
+          {{ schedule[a.id].start }} → {{ schedule[a.id].end }}
+        </td>
+
+        <td class="px-6 py-4 w-64">
+          <div class="w-full bg-slate-700 rounded-full h-2">
+            <div
+              class="bg-emerald-500 h-2 rounded-full"
+              style="width: {{ a.progress }}%"
+            ></div>
+          </div>
+
+          <div class="text-xs mt-1 text-slate-400">{{ a.progress }}%</div>
+        </td>
+        <!--
+<td class="px-6 py-4">
+
+<form action="/update" method="post" class="flex gap-2">
+
+<input type="hidden" name="activity_id" value="{{ a.id }}">
+
+<div>
+	<select
+	  name="progress"
+	  class="h-7 text-sm rounded border border-slate-600 bg-slate-800 text-slate-200 px-2"
+	>
+	  {% for p in range(0,101,10) %}
+	  <option value="{{ p }}"
+	    {% if (a.progress * 100)|int == p %}selected{% endif %}>
+	    {{ p }}%
+	  </option>
+	  {% endfor %}
+	</select>
+      </div>
+      
+      
+	
+
+<button
+class="bg-indigo-600 hover:bg-indigo-500
+px-3 py-1 rounded text-sm">
+Save
+</button>
+
+</form>
+
+</td>
+-->
+      </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

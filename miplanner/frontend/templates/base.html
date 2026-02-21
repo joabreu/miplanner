@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{{ title if title else "Project Tracker" }}</title>
+    <link
+      href="https://unpkg.com/tabulator-tables@5.6.0/dist/css/tabulator_midnight.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/tabulator-tables@5.6.0/dist/js/tabulator.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background: #0f172a;
+      }
+    </style>
+  </head>
+
+  <body class="text-slate-200">
+    <div class="max-w-6xl mx-auto p-8">
+      <header class="flex items-center justify-between mb-10">
+        <h1 class="text-3xl font-bold tracking-tight">Project Tracker</h1>
+
+        <a href="/" class="text-sm text-slate-400 hover:text-white"> Home </a>
+      </header>
+
+      {% block content %}{% endblock %}
+    </div>
+  </body>
+</html>
